@@ -37,7 +37,7 @@ Mount all routers specified by the `@router` decorator.
 Supposed that all your router files are put in `./apis`:
 
 ```js
-// ./apis/user.js
+// apis/user.js
 'use strict'
 const {router} = require('koa-decorators')
 
@@ -52,6 +52,7 @@ module.exports = class UserController {
 And in outside `app.js`:
 
 ```js
+// app.js
 'use strict'
 const Koa = require('koa')
 const {route} = require('koa-decorators')
@@ -81,7 +82,7 @@ It accepts two arguments:
 #### Example
 
 ```js
-// ./apis/user.js
+// apis/user.js
 'use strict'
 const {router, required} = require('koa-decorators')
 
