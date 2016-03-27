@@ -1,6 +1,9 @@
 'use strict'
-const router = require('./router')
+const {router, route} = require('./router')
+const required = require('./required')
 
 module.exports = {
-  router
+  router,
+  route,
+  required
 }
