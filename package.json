@@ -1,7 +1,7 @@
 {
   "name": "koa-decorators",
   "version": "1.0.0",
-  "description": "Decorate koa!",
+  "description": "Decorate koa",
   "main": "./lib/index.js",
   "scripts": {
     "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
