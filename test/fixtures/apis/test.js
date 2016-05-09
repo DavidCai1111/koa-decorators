@@ -1,6 +1,7 @@
 'use strict'
 const {router} = require('../../../src/router')
 const required = require('../../../src/required')
+const limiter = require('../../../src/limiter')
 
 module.exports = class testController {
   @router({method: 'GET', path: '/test'})
@@ -17,6 +18,12 @@ module.exports = class testController {
   @router({method: 'POST', path: '/required-body'})
   @required({body: ['haha', 'hehe']})
   async testRequiredBody (ctx) {
+    ctx.body = 'test'
+  }
+
+  @router({method: 'GET', path: '/rate-limit'})
+  @limiter({limit: 3, duration: 6000 * 10})
+  async testRateLimit (ctx) {
     ctx.body = 'test'
   }
 }
