@@ -14,6 +14,10 @@ function handleDescriptor (target, name, descriptor, rules) {
 
   async function middleware (ctx, next) {
     let {limit, duration} = rules
+    if (!limit) limit = 10000
+    if (!duration) duration = 60000
+    limit += 1
+
     let limiter = limitMapper.get(ctx.url)
     let now = Date.now()
 

@@ -15,6 +15,7 @@ npm install koa-decorators
 
 * [@router](#router)
 * [@required](#required)
+* [@limiter](#limiter)
 
 ## Docs
 
@@ -101,4 +102,38 @@ module.exports = class UserController {
 
 > curl localhost:3003/user?id=1
 > user
+```
+
+### @limiter
+
+Add rate-limiting for the decorated controller.
+
+It accepts two arguments:
+  - limit: `Number`, milliseconds, the times this controller can be visited in `duration`, by default it is `10000`.
+  - duration: `Number`, milliseconds, by default it is `60000`.
+
+#### Example
+```js
+// apis/user.js
+'use strict'
+const {limiter} = require('koa-decorators')
+
+module.exports = class UserController {
+  @router({method: 'GET', path: '/user'})
+  @limiter({limit: 3, duration: 60000})
+  async getUserById (ctx) {
+    ctx.body = 'user'
+  }
+}
+```
+
+```sh
+> curl localhost:3003/user
+> user
+> curl localhost:3003/user
+> user
+> curl localhost:3003/user
+> user
+> curl localhost:3003/user
+> Too Many Requests
 ```
