@@ -1,7 +1,16 @@
 'use strict'
 const {router} = require('../../../src/router')
 const required = require('../../../src/required')
-const limiter = require('../../../src/limiter')
+const convert = require('../../../src/public/convert')
+
+let obj = {flag: false}
+
+async function mid (ctx, next) {
+  obj.flag = true
+  await next()
+}
+
+let dec = convert(mid)
 
 module.exports = class testController {
   @router({method: 'GET', path: '/test'})
@@ -22,8 +31,15 @@ module.exports = class testController {
   }
 
   @router({method: 'GET', path: '/rate-limit'})
-  @limiter({limit: 3, duration: 6000 * 10})
   async testRateLimit (ctx) {
     ctx.body = 'test'
   }
+
+  @router({method: 'GET', path: '/convert'})
+  @dec
+  async testConvert (ctx) {
+    ctx.body = 'test'
+  }
 }
+
+module.exports = obj

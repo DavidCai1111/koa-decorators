@@ -1,5 +1,5 @@
 'use strict'
-/* global describe, before, after */
+/* global describe, it */
 require('should')
 const app = require('./fixtures/app')
 const request = require('supertest')(app.listen())

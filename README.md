@@ -15,7 +15,9 @@ npm install koa-decorators
 
 * [@router](#router)
 * [@required](#required)
-* [@limiter](#limiter)
+
+## Methods
+* [convert](#convert)
 
 ## Docs
 
@@ -104,36 +106,29 @@ module.exports = class UserController {
 > user
 ```
 
-### @limiter
+### convert(fun)
 
-Add rate-limiting for the decorated controller.
+Convert an async function to koa middleware decorator.
 
-It accepts two arguments:
-  - limit: `Number`, milliseconds, the times this controller can be visited in `duration`, by default it is `10000`.
-  - duration: `Number`, milliseconds, by default it is `60000`.
+This method accepts one argument:
+  - fun: `Function`, the async function to be converted.
 
 #### Example
 ```js
-// apis/user.js
 'use strict'
-const {limiter} = require('koa-decorators')
+const {convert} = require('koa-decorators')
 
-module.exports = class UserController {
-  @router({method: 'GET', path: '/user'})
-  @limiter({limit: 3, duration: 60000})
-  async getUserById (ctx) {
-    ctx.body = 'user'
+async function someFun (ctx, next) {
+  await next()
+}
+
+const converted = convert(someFun)
+
+module.exports = class {
+  @router({method: 'GET', path: '/convert'})
+  @converted
+  async convert (ctx) {
+    ctx.body = 'converted'
   }
 }
-```
-
-```sh
-> curl localhost:3003/user
-> user
-> curl localhost:3003/user
-> user
-> curl localhost:3003/user
-> user
-> curl localhost:3003/user
-> Too Many Requests
 ```

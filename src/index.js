@@ -1,11 +1,11 @@
 'use strict'
 const {router, route} = require('./router')
 const required = require('./required')
-const limiter = require('./limiter')
+const convert = require('./public/convert')
 
 module.exports = {
   router,
   route,
   required,
-  limiter
+  convert
 }
